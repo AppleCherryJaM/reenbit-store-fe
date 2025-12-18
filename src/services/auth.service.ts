@@ -7,7 +7,7 @@ export const authService = {
     return response.data;
   },
 
-  async register(data: RegisterInput): Promise<{ message: string; user?: any }> {
+  async register(data: RegisterInput): Promise<{ message: string }> {
     const response = await api.post('/auth/register', {
       email: data.email,
       name: data.name,
@@ -25,13 +25,20 @@ export const authService = {
 
   async logout(refreshToken?: string): Promise<{ message: string }> {
     try {
-      const response = await api.post('/auth/logout', { 
-        refresh_token: refreshToken 
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Logout error:', error);
+      
+			if (refreshToken) {
+        const response = await api.post('/auth/logout', { 
+          refresh_token: refreshToken 
+        });
+        return response.data;
+      }
+			
       return { message: 'Logged out locally' };
+    } catch (error: any) {
+      console.error('Logout API error:', error);
+      return { 
+        message: error.response?.data?.message || 'Logged out locally' 
+      };
     }
   },
 

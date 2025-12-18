@@ -4,14 +4,22 @@ import { useAuthStore } from '@/stores/auth.store';
 import { useToast } from '@/hooks/useToast';
 import { authService } from '@/services/auth.service';
 
-
 export function useAuth() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const setTokens = useAuthStore((state) => state.setTokens);
   const setUser = useAuthStore((state) => state.setUser);
   const clearAuth = useAuthStore((state) => state.clearAuth);
-  const refreshToken = useAuthStore((state) => state.refreshToken);
+
+	const handleAuthError = (error: any) => {
+    if (error?.message?.includes('No refresh token') || 
+        error?.message?.includes('Refresh token expired') ||
+        error?.response?.status === 401) {
+      authService.clearTokens();
+      clearAuth();
+      navigate('/auth', { replace: true });
+    }
+  };
 
   const loginMutation = useMutation({
     mutationFn: authService.login,
@@ -23,6 +31,7 @@ export function useAuth() {
       navigate('/', { replace: true });
     },
     onError: (error: any) => {
+      handleAuthError(error);
       toast.error(
         'Login Failed', 
         error.response?.data?.message || 'Login failed. Please try again.'
@@ -32,7 +41,7 @@ export function useAuth() {
 
   const registerMutation = useMutation({
     mutationFn: authService.register,
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success('Success', 'Account created successfully! Please login.');
     },
     onError: (error: any) => {
@@ -48,17 +57,17 @@ export function useAuth() {
       const refreshToken = localStorage.getItem('refresh_token') || undefined;
       return authService.logout(refreshToken);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       authService.clearTokens();
       clearAuth();
-      navigate('/login', { replace: true });
-      toast.success('Success', 'Logged out successfully!');
+      navigate('/auth', { replace: true });
+      toast.success('Success', data.message || 'Logged out successfully!');
     },
     onError: (error: any) => {
       authService.clearTokens();
       clearAuth();
-      navigate('/login', { replace: true });
-      toast.error('Error', error.response?.data?.message || 'Logout failed');
+      navigate('/auth', { replace: true });
+      toast.info('Logged Out', 'You have been logged out.');
     },
   });
 
@@ -69,9 +78,7 @@ export function useAuth() {
       setUser(data.user);
     },
     onError: (error) => {
-      authService.clearTokens();
-      clearAuth();
-      navigate('/login', { replace: true });
+      handleAuthError(error);
       toast.error('Session Expired', 'Your session has expired. Please login again.');
     },
   });

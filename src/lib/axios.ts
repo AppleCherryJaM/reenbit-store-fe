@@ -13,6 +13,7 @@ export const api = axios.create({
 
 const saveTokens = (accessToken: string, refreshToken: string) => {
   localStorage.setItem('access_token', accessToken);
+  localStorage.removeItem('refresh_token');
   localStorage.setItem('refresh_token', refreshToken);
 };
 
@@ -41,10 +42,11 @@ api.interceptors.response.use(
         const refreshToken = localStorage.getItem('refresh_token');
 
         if (!refreshToken) {
+          // Не делаем редирект здесь, просто очищаем токены
           localStorage.removeItem('access_token');
           localStorage.removeItem('refresh_token');
-          window.location.href = '/login';
-          return Promise.reject(error);
+          // Ошибка будет обработана в компоненте
+          return Promise.reject(new Error('No refresh token available'));
         }
 
         const { data } = await axios.post(`${VITE_API_URL}/auth/refresh`, {
@@ -59,8 +61,8 @@ api.interceptors.response.use(
       } catch (refreshError) {
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        window.location.href = '/login';
-        return Promise.reject(refreshError);
+        // Ошибка будет обработана в компоненте
+        return Promise.reject(new Error('Refresh token expired'));
       }
     }
 

@@ -1,3 +1,12 @@
+import { useAuth } from '@/hooks/useAuth';
+import { Button } from '@/components/ui/button';
+
 export default function MainPage() {
-  return <div>Welcome to Food Store</div>;
+  const { logout } = useAuth();
+	
+	return (
+		<Button onClick={() => logout()} variant="outline">
+        Logout
+    </Button>
+	);
 }

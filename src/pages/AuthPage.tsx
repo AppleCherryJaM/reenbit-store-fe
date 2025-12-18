@@ -51,32 +51,6 @@ export default function AuthPage() {
               />
             }
           />
-          
-          <div className="mt-6 text-center text-sm text-gray-600">
-            {activeTab === 'login' ? (
-              <p>
-                Don't have an account?{' '}
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('register')}
-                  className="text-primary hover:underline font-medium"
-                >
-                  Sign up
-                </button>
-              </p>
-            ) : (
-              <p>
-                Already have an account?{' '}
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('login')}
-                  className="text-primary hover:underline font-medium"
-                >
-                  Sign in
-                </button>
-              </p>
-            )}
-          </div>
         </CardContent>
       </Card>
     </div>

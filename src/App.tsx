@@ -6,6 +6,7 @@ import { router } from './router'
 import { queryClient } from './lib/query-client'
 
 function App() {
+  
   return (
     <QueryClientProvider client={queryClient}>
       <ToasterProvider>

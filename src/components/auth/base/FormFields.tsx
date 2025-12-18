@@ -1,19 +1,6 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { UseFormReturn } from 'react-hook-form';
-
-interface FieldConfig {
-  name: string;
-  label: string;
-  type?: string;
-  placeholder?: string;
-  autoComplete?: string;
-}
-
-interface DynamicFormFieldsProps {
-  form: UseFormReturn<any>;
-  fields: FieldConfig[];
-}
+import { DynamicFormFieldsProps } from '../types/types';
 
 export function DynamicFormFields({ form, fields }: DynamicFormFieldsProps) {
   return (

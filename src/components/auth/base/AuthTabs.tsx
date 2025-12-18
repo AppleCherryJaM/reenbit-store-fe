@@ -1,11 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-interface AuthTabsProps {
-  activeTab: 'login' | 'register';
-  onTabChange: (tab: 'login' | 'register') => void;
-  loginComponent: React.ReactNode;
-  registerComponent: React.ReactNode;
-}
+import type { AuthTabsProps } from '@components/auth/types/types';
 
 export function AuthTabs({ 
   activeTab, 
