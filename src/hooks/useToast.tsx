@@ -62,7 +62,6 @@ export function useToast() {
     }
   }
 
-  // Утилитарные методы
   toast.success = (title: string, description?: string, options?: Omit<ToastOptions, 'type' | 'title' | 'description'>) => 
     sonnerToast.success(title, { description, ...options })
   

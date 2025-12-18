@@ -1,12 +1,17 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
-import { PublicRoute } from './PublicRoute';
 import AuthPage from '@/pages/AuthPage';
+import { PublicRoute } from './PublicRoute';
+import MainPage from '@/pages/MainPage';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Navigate to="/auth" replace />,
+    element: (
+      <ProtectedRoute>
+        <MainPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/auth',
@@ -16,15 +21,8 @@ export const router = createBrowserRouter([
       </PublicRoute>
     ),
   },
-  // {
-  //   path: '/',
-  //   element: (
-  //     <ProtectedRoute>
-  //       <Layout />
-  //     </ProtectedRoute>
-  //   ),
-  //   children: [
-      
-  //   ],
-  // },
+  {
+    path: '*',
+    element: <Navigate to="/" replace />,
+  },
 ]);

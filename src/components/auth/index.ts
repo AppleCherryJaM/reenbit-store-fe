@@ -1,4 +1,4 @@
-export { AuthForm } from './AuthForm';
+export { AuthForm } from './base/AuthForm';
 export { LoginForm } from './LoginForm';
 export { RegisterForm } from './RegisterForm';
-export { AuthTabs } from './AuthTabs';
+export { AuthTabs } from './base/AuthTabs';
