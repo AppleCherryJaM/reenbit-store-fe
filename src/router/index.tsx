@@ -1,18 +1,15 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
-import AuthPage from '@/pages/AuthPage';
 import { PublicRoute } from './PublicRoute';
-import MainPage from '@/pages/MainPage';
+import Layout from '@/components/layout/Layout';
+import AuthPage from '@/pages/AuthPage';
+import DashboardPage from '@/pages/DashboardPage';
+// import ProductsPage from '@/pages/ProductsPage';
+// import OrdersPage from '@/pages/OrdersPage';
+// import CustomersPage from '@/pages/CustomersPage';
+// import SettingsPage from '@/pages/SettingsPage';
 
 export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: (
-      <ProtectedRoute>
-        <MainPage />
-      </ProtectedRoute>
-    ),
-  },
   {
     path: '/auth',
     element: (
@@ -22,7 +19,37 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: '/',
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <DashboardPage />,
+      },
+      // {
+      //   path: 'products',
+      //   element: <ProductsPage />,
+      // },
+      // {
+      //   path: 'orders',
+      //   element: <OrdersPage />,
+      // },
+      // {
+      //   path: 'customers',
+      //   element: <CustomersPage />,
+      // },
+      // {
+      //   path: 'settings',
+      //   element: <SettingsPage />,
+      // },
+    ],
+  },
+  {
     path: '*',
-    element: <Navigate to="/" replace />,
+    element: <div>404 - Page Not Found</div>,
   },
 ]);
