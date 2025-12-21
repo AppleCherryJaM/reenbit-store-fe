@@ -5,8 +5,8 @@ export default function MainPage() {
   const { logout } = useAuth();
 	
 	return (
-		<Button onClick={() => logout()} variant="outline">
-        Logout
-    </Button>
+		<>
+			Main Page
+		</>
 	);
 }

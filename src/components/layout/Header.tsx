@@ -24,14 +24,12 @@ export function Header() {
             </Button>
           </Link>
 
-          {/* Кнопка Products (для аутентифицированных) */}
           <Link to="/products">
             <Button variant="ghost" size="sm">
               Products
             </Button>
           </Link>
 
-          {/* Кнопка выхода */}
           <Button variant="outline" size="sm" onClick={handleLogout}>
             Logout
           </Button>

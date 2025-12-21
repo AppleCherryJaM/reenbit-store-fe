@@ -3,7 +3,9 @@ import { ProtectedRoute } from './ProtectedRoute';
 import { PublicRoute } from './PublicRoute';
 import Layout from '@/components/layout/Layout';
 import AuthPage from '@/pages/AuthPage';
-import DashboardPage from '@/pages/DashboardPage';
+// import DashboardPage from '@/pages/DashboardPage';
+import AboutPage from '@/pages/secondary-pages/AboutPage';
+import MainPage from '@/pages/MainPage';
 // import ProductsPage from '@/pages/ProductsPage';
 // import OrdersPage from '@/pages/OrdersPage';
 // import CustomersPage from '@/pages/CustomersPage';
@@ -28,8 +30,12 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashboardPage />,
+        element: <MainPage />,
       },
+      // {
+      //   index: true,
+      //   element: <DashboardPage />,
+      // },
       // {
       //   path: 'products',
       //   element: <ProductsPage />,
@@ -46,6 +52,10 @@ export const router = createBrowserRouter([
       //   path: 'settings',
       //   element: <SettingsPage />,
       // },
+      { 
+        path: 'about', 
+        element: <AboutPage /> 
+      },
     ],
   },
   {
