@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
-import AuthPage from '@/pages/AuthPage';
 import { PublicRoute } from './PublicRoute';
+import AuthPage from '@/pages/AuthPage';
 import MainPage from '@/pages/MainPage';
 
 export const router = createBrowserRouter([

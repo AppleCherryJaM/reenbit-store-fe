@@ -42,13 +42,11 @@ api.interceptors.response.use(
         const refreshToken = localStorage.getItem('refresh_token');
 
         if (!refreshToken) {
-          // Не делаем редирект здесь, просто очищаем токены
           localStorage.removeItem('access_token');
           localStorage.removeItem('refresh_token');
-          // Ошибка будет обработана в компоненте
           return Promise.reject(new Error('No refresh token available'));
         }
-
+        
         const { data } = await axios.post(`${VITE_API_URL}/auth/refresh`, {
           refresh_token: refreshToken,
         });
@@ -61,7 +59,6 @@ api.interceptors.response.use(
       } catch (refreshError) {
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        // Ошибка будет обработана в компоненте
         return Promise.reject(new Error('Refresh token expired'));
       }
     }

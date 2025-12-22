@@ -27,8 +27,6 @@
       "@components/*": ["./src/components/*"],
       "@lib/*": ["./src/lib/*"]
     },
-
-    "ignoreDeprecations": "6.0"
   },
   "include": ["src"],
   "references": []

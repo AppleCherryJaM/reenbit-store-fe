@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from '@/components/ui/form';
+import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import type { UseFormReturn } from 'react-hook-form';
