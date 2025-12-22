@@ -63,7 +63,7 @@ export function useAuth() {
       navigate('/auth', { replace: true });
       toast.success('Success', data.message || 'Logged out successfully!');
     },
-    onError: (error: any) => {
+    onError: (_error: any) => {
       authService.clearTokens();
       clearAuth();
       navigate('/auth', { replace: true });
