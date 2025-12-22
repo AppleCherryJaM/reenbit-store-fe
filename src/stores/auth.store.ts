@@ -6,6 +6,7 @@ interface User {
   email: string;
   name: string;
   role: string;
+  avatarUrl?: string;
 }
 
 interface AuthState {
@@ -13,45 +14,63 @@ interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
   isAuthenticated: boolean;
-  
-  setUser: (user: User) => void;
   setTokens: (accessToken: string, refreshToken: string) => void;
-  logout: () => void;
-  checkAuth: () => boolean;
+  setUser: (user: User) => void;
+  clearAuth: () => void;
+  initialize: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set, get) => ({
+    (set, _get) => ({
       user: null,
       accessToken: null,
       refreshToken: null,
       isAuthenticated: false,
-
+      
+      setTokens: (accessToken, refreshToken) => {
+        localStorage.setItem('access_token', accessToken);
+        localStorage.setItem('refresh_token', refreshToken);
+        
+        set({
+          accessToken,
+          refreshToken,
+          isAuthenticated: true,
+        });
+      },
+      
       setUser: (user) => set({ user }),
       
-      setTokens: (accessToken, refreshToken) => 
-        set({ 
-          accessToken, 
-          refreshToken,
-          isAuthenticated: true 
-        }),
-      
-      logout: () => 
-        set({ 
-          user: null, 
-          accessToken: null, 
+      clearAuth: () => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        
+        set({
+          user: null,
+          accessToken: null,
           refreshToken: null,
-          isAuthenticated: false 
-        }),
+          isAuthenticated: false,
+        });
+      },
       
-      checkAuth: () => {
-        const { accessToken } = get();
-        return !!accessToken;
+      initialize: () => {
+        const accessToken = localStorage.getItem('access_token');
+        const refreshToken = localStorage.getItem('refresh_token');
+        
+        if (accessToken && refreshToken) {
+          set({
+            accessToken,
+            refreshToken,
+            isAuthenticated: true,
+          });
+        }
       },
     }),
     {
       name: 'auth-storage',
+      partialize: (state) => ({
+        user: state.user,
+      }),
     }
   )
 );
