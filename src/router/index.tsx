@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { ProtectedRoute } from './ProtectedRoute';
+// import { ProtectedRoute } from './ProtectedRoute';
 import { PublicRoute } from './PublicRoute';
 import AuthPage from '@/pages/AuthPage';
 
